@@ -16,24 +16,68 @@ class ViewController: UIViewController {
     @IBOutlet weak var stack3: UIStackView!
     @IBOutlet weak var stack4: UIStackView!
    
+    @IBOutlet var buttons: [UIButton]!
+    var dick = [Int: Int]()
+    var game = Game(numberOfCards: 16) //???
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    print("did load")
-   var arrayButtos = mainStack.subviews
+        print("did load")
         
-        
+        createDick()
         
     }
 
-
+    func createDick() {
+        var j = 0
+        dick.removeAll()
+        
+        for i in game.cards {
+            dick[j] = i.number
+            j += 1
+        }
+        
+    }
     
-    func buttonTouch(button sender: UIButton) {
-        UIView.animate(withDuration: 2, delay: 0, options: [], animations: {
-            sender.alpha = 0.2
-            sender.isHidden = true
-        }) { (finish) in
+    func refreshViewFromModel () {
+       createDick()
+        for i in buttons.indices {
+             buttons[i].setTitle(String(game.cards[i].number), for: .normal)
             
         }
+       let zerroButton = dick[0]
+        buttons[zerroButton!].alpha = 0.4
+    }
+    
+    func canMove(sender: UIButton) -> Bool {
+ 
+ //??????
+        return true
+    }
+    
+    
+    func replaceCardInDick(sender: UIButton) {
+       
+        for i in game.cards.indices { //????
+            if buttons[dick[i]] == sender {
+                dick[i] = dick[0]
+                
+            }
+        }
+        
+        dick[0] = sender
+        
+     
+    }
+    
+    
+    func buttonTouch(button sender: UIButton) {
+        if canMove(sender: sender) {
+        replaceCardInDick(sender: sender)
+        }
+        
+        refreshViewFromModel()
     }
     
     

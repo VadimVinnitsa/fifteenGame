@@ -18,14 +18,14 @@ class Game {
             let card = Card()
             cards.append(card)
         }
+          //?????
     }
     
 }
 
 
 struct Card {
-    var open = true
-    var number = 0
+    var number : Int
     static var currentNumber = 0
     
     init() {
