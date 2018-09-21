@@ -10,16 +10,37 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var mainStack: UIStackView!
+    @IBOutlet weak var stack1: UIStackView!
+    @IBOutlet weak var stack2: UIStackView!
+    @IBOutlet weak var stack3: UIStackView!
+    @IBOutlet weak var stack4: UIStackView!
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    print("did load")
+   var arrayButtos = mainStack.subviews
+        
+        
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
+    
+    func buttonTouch(button sender: UIButton) {
+        UIView.animate(withDuration: 2, delay: 0, options: [], animations: {
+            sender.alpha = 0.2
+            sender.isHidden = true
+        }) { (finish) in
+            
+        }
+    }
+    
+    
+    @IBAction func buttoPressed(_ sender: UIButton) {
+    buttonTouch(button: sender)
+    }
+    
 
 }
 
