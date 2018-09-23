@@ -7,18 +7,28 @@
 //
 
 import Foundation
+import GameplayKit
 
 class Game {
-    var cards = [Card]()
+    var cards = [[Card]]()
+    
+    func shuffle() {
+        cards = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: cards) as! [[Card]] // do normar shuflle
+        
+    }
     
     
-    
-    init(numberOfCards: Int) {
-        for i in 0 ... numberOfCards-1 {
-            let card = Card()
-            cards.append(card)
+    init(numberOfCards: Int) { //only 16 const
+        for i in 0 ..< 4 {
+            let temp = [Card]()
+            cards.append(temp)
+            
+            for j in 0 ..< 4 {
+                let card = Card()
+                cards[i].append(card)
+            }
         }
-          //?????
+        
     }
     
 }
