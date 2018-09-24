@@ -9,6 +9,8 @@
 import Foundation
 import GameplayKit
 
+
+
 class Game {
     var cards = [[Card]]()
     
@@ -19,6 +21,8 @@ class Game {
     
     
     init(numberOfCards: Int) { //only 16 const
+        Card.currentNumber = 0
+        
         for i in 0 ..< 4 {
             let temp = [Card]()
             cards.append(temp)
@@ -28,10 +32,8 @@ class Game {
                 cards[i].append(card)
             }
         }
-        
+            }
     }
-    
-}
 
 
 struct Card {
@@ -42,5 +44,6 @@ struct Card {
         self.number = Card.currentNumber
         Card.currentNumber += 1
     }
+    
     
 }

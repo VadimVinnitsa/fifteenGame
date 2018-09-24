@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+    static var storyboardID = "gameID"
     @IBOutlet var row1: [UIButton]!
     @IBOutlet var row2: [UIButton]!
     @IBOutlet var row3: [UIButton]!
@@ -17,13 +17,16 @@ class ViewController: UIViewController {
     var buttonArray = [[UIButton]]()
     var maxX = 4
     var maxY = 4
+    var currentTime = 70 //0
+    @IBOutlet weak var timeLabel: UILabel!
     
+    var myTimer = Timer()
     var game = Game(numberOfCards: 16) //???
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("did load")
-        print(game.cards)
+        
         buttonArray.append(row1)
         buttonArray.append(row2)
         buttonArray.append(row3)
@@ -34,6 +37,10 @@ class ViewController: UIViewController {
     
     func startRound() {
         print("new round")
+        myTimer.invalidate()
+        currentTime = 70//
+        
+        myTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(funcForTimer), userInfo: nil, repeats: true)
         
         for i in buttonArray { //?? not work
             for j in i {
@@ -48,8 +55,25 @@ class ViewController: UIViewController {
         refreshViewFromModel()
     }
     
-    func refreshViewFromModel () {
+    @objc func funcForTimer() {
+        currentTime += 1
+        refreshTimerLabel()
+    }
     
+    func refreshTimerLabel() {
+        let formatter : DateComponentsFormatter = {
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.hour, .minute, .second]
+            return formatter
+        }()
+        
+        timeLabel.text = formatter.string(from: TimeInterval(currentTime))!
+        
+    }
+    
+    
+    func refreshViewFromModel () {
+        
         
         
         for i in 0 ..< maxX {
@@ -131,7 +155,29 @@ class ViewController: UIViewController {
     @IBAction func newRoundPressed(_ sender: UIButton) {
         startRound()
     }
+  
+    
+    @IBAction func hidePressed(_ sender: UIButton) {
+   
+    }
+   
+    @IBAction func showPressed(_ sender: UIButton) {
+    let v = Bundle.main.loadNibNamed("memu", owner: self, options: nil)![0] as! menuView //?? where need make constraint
+        v.delegate = self
+        view.addSubview(v)
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        v.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50).isActive = true
+        v.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.5).isActive = true
+        v.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.2).isActive = true
+        
+    }
+    
+}
+extension ViewController: SomeProtocol {
+    func someF() {
+        startRound()
+    }
     
     
 }
-
