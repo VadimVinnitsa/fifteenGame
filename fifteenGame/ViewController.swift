@@ -33,12 +33,14 @@ class ViewController: UIViewController {
         buttonArray.append(row4)
         startRound()
         
+     
+        
     }
     
     func startRound() {
         print("new round")
         myTimer.invalidate()
-        currentTime = 70//
+        currentTime = 70 // ?? make 0
         
         myTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(funcForTimer), userInfo: nil, repeats: true)
         
@@ -51,7 +53,7 @@ class ViewController: UIViewController {
             }
         }
         
-        game.shuffle()
+        game.shuffleCards()
         refreshViewFromModel()
     }
     
@@ -73,9 +75,6 @@ class ViewController: UIViewController {
     
     
     func refreshViewFromModel () {
-        
-        
-        
         for i in 0 ..< maxX {
             for j in 0 ..< maxY {
                 buttonArray[i][j].setTitle(String(game.cards[i][j].number), for: .normal)
@@ -90,7 +89,22 @@ class ViewController: UIViewController {
         }
     }
     
-    func ifUCanMoveMove(sender: UIButton) -> Bool {
+    func isCanMove(sender: UIButton) -> Bool {
+    let t = findCurrentAndZeroCardIndex(sender: sender)
+      if  ( ((t.zeroX == t.currentX) && (t.zerroY-1 == t.currentY || t.zerroY+1 == t.currentY)) || ((t.zerroY == t.currentY) && (t.zeroX-1 == t.currentX || t.zeroX + 1 == t.currentX )))
+        { return true  }
+        return false
+    }
+    
+    func move (sender: UIButton) {
+    let t = findCurrentAndZeroCardIndex(sender: sender)
+      
+            let tempCard = game.cards[t.zeroX][t.zerroY]
+            game.cards[t.zeroX][t.zerroY] = game.cards[t.currentX][t.currentY] //?? what i do this???
+            game.cards[t.currentX][t.currentY] = tempCard
+    }
+    
+    func findCurrentAndZeroCardIndex(sender : UIButton) -> (currentX : Int, currentY : Int, zeroX : Int, zerroY : Int) {
         var x = 0
         var y = 0
         var zeroX = 0
@@ -108,15 +122,7 @@ class ViewController: UIViewController {
                 }
             }
         }
-        
-        if (zeroX == x && zeroY-1 == y) || (zeroX == x && zeroY+1 == y) || (zeroY == y && zeroX-1 == x) || (zeroY == y && zeroX + 1 == x) {
-            let tempCard = game.cards[zeroX][zeroY]
-            game.cards[zeroX][zeroY] = game.cards[x][y] //?? what i do this???
-            game.cards[x][y] = tempCard
-            return true
-        }
-        
-        return false
+        return (x,y,zeroX,zeroY)
     }
     
     
@@ -135,8 +141,8 @@ class ViewController: UIViewController {
     }
     
     func buttonTouch(button sender: UIButton) {
-        if ifUCanMoveMove(sender: sender)
-        {
+        if isCanMove(sender: sender) {
+            move(sender: sender)
             refreshViewFromModel()
         }
         if isWin() {
@@ -164,20 +170,32 @@ class ViewController: UIViewController {
     @IBAction func showPressed(_ sender: UIButton) {
     let v = Bundle.main.loadNibNamed("memu", owner: self, options: nil)![0] as! menuView //?? where need make constraint
         v.delegate = self
-        view.addSubview(v)
+       
         v.translatesAutoresizingMaskIntoConstraints = false
-        v.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        v.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50).isActive = true
-        v.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.5).isActive = true
-        v.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.2).isActive = true
+//        NSLayoutConstraint.activate([
+//            v.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+//            v.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
+//            v.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.8),
+//            v.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.2)
+//            ])
+//
+        view.addSubview(v)
+        
+        NSLayoutConstraint.activate([
+            v.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            v.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
+            v.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.8),
+            v.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.2)
+            ])
+        
         
     }
     
 }
+
 extension ViewController: SomeProtocol {
     func someF() {
         startRound()
     }
-    
     
 }

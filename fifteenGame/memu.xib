@@ -20,7 +20,7 @@
                     <rect key="frame" x="0.0" y="70" width="120" height="68"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" title="Button"/>
+                    <state key="normal" title="info"/>
                     <connections>
                         <action selector="tuturialPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="IXR-1z-viz"/>
                     </connections>
@@ -29,7 +29,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="120" height="68"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" title="Button"/>
+                    <state key="normal" title="restartRound"/>
                     <connections>
                         <action selector="resetPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="zeA-XV-vsn"/>
                     </connections>
@@ -38,7 +38,7 @@
             <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="-259" y="74"/>
+            <point key="canvasLocation" x="-259.5" y="74"/>
         </view>
     </objects>
 </document>
